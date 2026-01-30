@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+const notImplemented = (req, res) => res.status(501).json({ message: "Not implemented" });
+router.post("/therapist/:therapistId/verification/reject", notImplemented);
+router.get("/verifications", notImplemented);
+router.get("/verifications/:therapistId", notImplemented);
+router.post("/therapist/:therapistId/approve", notImplemented);
+exports.default = router;

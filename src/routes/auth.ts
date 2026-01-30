@@ -1,11 +1,12 @@
 import { Router, type Request, type Response } from "express";
+import authController from "../controller/authController";
 
 const router = Router();
 const notImplemented = (req: Request, res: Response) =>
   res.status(501).json({ message: "Not implemented" });
 
-router.post("/register/therapist", notImplemented);
-router.post("/register/seafarer", notImplemented);
+router.post("/register/therapist", authController.register);
+router.post("/register/seafarer", authController.register);
 router.post("/login", notImplemented);
 router.post("/logout", notImplemented);
 

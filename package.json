@@ -2,21 +2,32 @@
   "name": "seabackend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": " npx tsc",
+    "build-prod": "npx tsc",
+    "generate": "npx prisma generate && npx prisma db push",
+    "start": "npm run generate && node ./dist/server.js",
+    "predev": "npm run build ",
+    "dev": "concurrently \"npx tsc -w\" \"nodemon ./dist/server.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1"
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.2",
+    "prisma": "^5.8.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.10",
-    "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }

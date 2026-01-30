@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+const notImplemented = (req, res) => res.status(501).json({ message: "Not implemented" });
+router.post("/accounts/:accountId/suspend", notImplemented);
+router.get("/profiles/:profileId", notImplemented);
+router.get("/profiles/account/:accountId", notImplemented);
+router.get("/profiles/email/:email", notImplemented);
+router.get("/profiles/vessel/:vesselName", notImplemented);
+router.get("/profiles/incomplete", notImplemented);
+router.post("/profiles/:profileId/complete", notImplemented);
+router.put("/profiles/:profileId/emergency-contacts", notImplemented);
+router.post("/accounts/:accountId/request-deletion", notImplemented);
+exports.default = router;

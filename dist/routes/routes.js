@@ -1,0 +1,27 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_1 = __importDefault(require("./auth"));
+const therapist_1 = __importDefault(require("./therapist"));
+const appointments_1 = __importDefault(require("./appointments"));
+const admin_1 = __importDefault(require("./admin"));
+const wellness_1 = __importDefault(require("./wellness"));
+const identity_1 = __importDefault(require("./identity"));
+const seafarer_1 = __importDefault(require("./seafarer"));
+const sessions_1 = __importDefault(require("./sessions"));
+const accounts_1 = __importDefault(require("./accounts"));
+const router = (0, express_1.Router)();
+router.use("/auth", auth_1.default);
+router.use("/therapists", therapist_1.default);
+router.use("/therapist", therapist_1.default);
+router.use("/appointments", appointments_1.default);
+router.use("/admin", admin_1.default);
+router.use("/wellness", wellness_1.default);
+router.use("/identity", identity_1.default);
+router.use("/seafarer", seafarer_1.default);
+router.use("/sessions", sessions_1.default);
+router.use("/accounts", accounts_1.default);
+exports.default = router;
