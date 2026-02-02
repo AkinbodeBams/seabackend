@@ -5,8 +5,8 @@ const router = Router();
 const notImplemented = (req: Request, res: Response) =>
   res.status(501).json({ message: "Not implemented" });
 
-router.post("/register/therapist", authController.register);
-router.post("/register/seafarer", authController.register);
+router.post("/register/therapist", authController.signUp);
+router.post("/register/seafarer", authController.signUp);
 router.post("/login", notImplemented);
 router.post("/logout", notImplemented);
 

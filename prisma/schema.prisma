@@ -20,75 +20,101 @@ enum VerificationStatus {
 }
 
 model Account {
-  id          String      @id @default(uuid())
-  email       String      @unique
-  password    String
-  type        AccountType
-  suspended   Boolean     @default(false)
-  createdAt  DateTime    @default(now())
+  id        String      @id @default(uuid())
+  createdAt DateTime    @default(now())
+  email     String      @unique
+  password  String
+  type      AccountType
+  isActive Boolean     @default(false)
 
-  profile     Profile?
-  therapist   Therapist?
-  seafarer    Seafarer?
+  profile   Profile?
+  therapist Therapist?
+  seafarer  Seafarer?
+  Session   Session[]
 }
 
 model Profile {
-  id        String   @id @default(uuid())
-  accountId String   @unique
+  id        String  @id @default(uuid())
+  accountId String  @unique
   firstName String?
   lastName  String?
-  phone     String?
-  completed Boolean  @default(false)
+  countryCode     String?
+  phoneNumber     String?
+  completed Boolean @default(false)
 
-  account   Account  @relation(fields: [accountId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
 }
 
 model Therapist {
-  id              String              @id @default(uuid())
-  accountId       String              @unique
-  verified        Boolean             @default(false)
-  verification    Verification?
-  maritimeOnly    Boolean             @default(false)
-  rating          Float               @default(0)
+  id           String        @id @default(uuid())
+  accountId    String        @unique
+  verified     Boolean       @default(false)
+  verification Verification?
+  maritimeOnly Boolean       @default(false)
+  rating       Float         @default(0)
 
-  account         Account             @relation(fields: [accountId], references: [id])
-  appointments    Appointment[]
+  account      Account       @relation(fields: [accountId], references: [id])
+  appointments Appointment[]
 }
 
 model Seafarer {
-  id            String          @id @default(uuid())
-  accountId     String          @unique
+  id        String @id @default(uuid())
+  accountId String @unique
 
-  account       Account         @relation(fields: [accountId], references: [id])
-  appointments  Appointment[]
+  account         Account           @relation(fields: [accountId], references: [id])
+  appointments    Appointment[]
+  WellnessJournal WellnessJournal[]
 }
 
 model Verification {
-  id           String              @id @default(uuid())
-  therapistId  String              @unique
-  status       VerificationStatus  @default(PENDING)
-  notes        String?
+  id          String             @id @default(uuid())
+  therapistId String             @unique
+  status      VerificationStatus @default(PENDING)
+  notes       String?
 
-  therapist    Therapist           @relation(fields: [therapistId], references: [id])
+  therapist Therapist @relation(fields: [therapistId], references: [id])
 }
 
 model Appointment {
-  id            String      @id @default(uuid())
-  therapistId   String
-  seafarerId    String
-  startTime     DateTime
-  duration      Int
-  status        String
+  id          String   @id @default(uuid())
+  therapistId String
+  seafarerId  String
+  startTime   DateTime
+  duration    Int
+  status      String
 
-  therapist     Therapist  @relation(fields: [therapistId], references: [id])
-  seafarer      Seafarer   @relation(fields: [seafarerId], references: [id])
+  therapist Therapist @relation(fields: [therapistId], references: [id])
+  seafarer  Seafarer  @relation(fields: [seafarerId], references: [id])
 }
 
 model WellnessJournal {
-  id          String   @id @default(uuid())
-  seafarerId  String
-  name        String
-  paused      Boolean  @default(false)
+  id         String  @id @default(uuid())
+  seafarerId String
+  name       String
+  paused     Boolean @default(false)
 
-  seafarer    Seafarer @relation(fields: [seafarerId], references: [id])
+  seafarer Seafarer @relation(fields: [seafarerId], references: [id])
+}
+
+// Add to your existing prisma/schema.prisma
+model Session {
+  id             String    @id @default(cuid())
+  accountId      String
+  refreshToken   String    @unique
+  deviceInfo     Json? // { deviceId, deviceType, osVersion, appVersion, deviceFingerprint }
+  ipAddress      String?
+  userAgent      String?
+  clientId       String?
+  isActive       Boolean   @default(true)
+  expiresAt      DateTime
+  lastActivityAt DateTime  @default(now())
+  loggedOutAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([accountId, isActive])
+  @@index([refreshToken])
+  @@index([expiresAt])
 }
