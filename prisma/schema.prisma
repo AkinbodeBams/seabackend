@@ -38,8 +38,13 @@ model Profile {
   accountId String  @unique
   firstName String?
   lastName  String?
+  dateOfBirth DateTime?
   countryCode     String?
   phoneNumber     String?
+  nationality   String?
+  gender    String?
+  rank      String?
+
   completed Boolean @default(false)
 
   account Account @relation(fields: [accountId], references: [id])

@@ -344,12 +344,12 @@ export const refreshToken = catchAsync(
     }
 
     // Check account status
-    if (!session.account.isActive || session.account.isSuspended) {
+    if (!session.account.isActive) {
       return next(new AppError("Account is not active", 403));
     }
 
     // Generate new tokens
-    const tokens = generateTokens(session.accountId, session.account.role);
+    const tokens = generateTokens(session.accountId);
 
     // Update session with new refresh token
     await prisma.session.update({
@@ -370,7 +370,7 @@ export const refreshToken = catchAsync(
       tokenType: "Bearer",
       expiresIn: 300,
       refreshTokenExpiresIn: 604800,
-      accountStatus: session.account.isSuspended ? "SUSPENDED" : "ACTIVE",
+      accountStatus: "ACTIVE",
       message: "Token refreshed successfully",
     };
 

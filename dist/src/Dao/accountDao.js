@@ -60,6 +60,7 @@ function findAccountByEmail(email) {
             include: {
                 seafarer: true,
                 therapist: true,
+                profile: true,
             },
         });
         return account;

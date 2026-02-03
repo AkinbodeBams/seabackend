@@ -47,6 +47,7 @@ export async function findAccountByEmail(email: string) {
     include: {
       seafarer: true,
       therapist: true,
+      profile: true,
     },
   });
   return account;

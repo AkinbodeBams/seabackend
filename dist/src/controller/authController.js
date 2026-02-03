@@ -238,11 +238,11 @@ exports.refreshToken = (0, helper_1.catchAsync)((req, res, next) => __awaiter(vo
         return next(new appError_1.AppError("Session not found or expired", 401));
     }
     // Check account status
-    if (!session.account.isActive || session.account.isSuspended) {
+    if (!session.account.isActive) {
         return next(new appError_1.AppError("Account is not active", 403));
     }
     // Generate new tokens
-    const tokens = generateTokens(session.accountId, session.account.role);
+    const tokens = generateTokens(session.accountId);
     // Update session with new refresh token
     yield prisma.session.update({
         where: { id: session.id },
@@ -261,7 +261,7 @@ exports.refreshToken = (0, helper_1.catchAsync)((req, res, next) => __awaiter(vo
         tokenType: "Bearer",
         expiresIn: 300,
         refreshTokenExpiresIn: 604800,
-        accountStatus: session.account.isSuspended ? "SUSPENDED" : "ACTIVE",
+        accountStatus: "ACTIVE",
         message: "Token refreshed successfully",
     };
     res.status(200).json(response);

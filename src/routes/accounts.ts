@@ -1,4 +1,6 @@
 import { Router, type Request, type Response } from "express";
+import authController from "../controller/authController";
+import accountController from "../controller/accountController";
 
 const router = Router();
 const notImplemented = (req: Request, res: Response) =>
@@ -6,6 +8,6 @@ const notImplemented = (req: Request, res: Response) =>
 
 router.get("/:accountId/lookup", notImplemented);
 router.get("/lookup/by-email", notImplemented);
-router.get("/lookup/email/:email", notImplemented);
+router.get("/lookup/email/:email", accountController.getAccount);
 
 export default router;
