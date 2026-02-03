@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAccount = createAccount;
+exports.findAccountByEmail = findAccountByEmail;
 const prisma_1 = __importDefault(require("../../lib/prisma"));
 function createAccount(data) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -50,5 +51,17 @@ function createAccount(data) {
             // ✅ return account from transaction
             return account;
         }));
+    });
+}
+function findAccountByEmail(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const account = yield prisma_1.default.account.findUnique({
+            where: { email },
+            include: {
+                seafarer: true,
+                therapist: true,
+            },
+        });
+        return account;
     });
 }

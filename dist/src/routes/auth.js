@@ -9,6 +9,6 @@ const router = (0, express_1.Router)();
 const notImplemented = (req, res) => res.status(501).json({ message: "Not implemented" });
 router.post("/register/therapist", authController_1.default.signUp);
 router.post("/register/seafarer", authController_1.default.signUp);
-router.post("/login", notImplemented);
+router.post("/login", authController_1.default.login);
 router.post("/logout", notImplemented);
 exports.default = router;

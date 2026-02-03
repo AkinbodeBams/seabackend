@@ -40,3 +40,14 @@ export async function createAccount(data: signUpdataPayload) {
     return account;
   });
 }
+
+export async function findAccountByEmail(email: string) {
+  const account = await prisma.account.findUnique({
+    where: { email },
+    include: {
+      seafarer: true,
+      therapist: true,
+    },
+  });
+  return account;
+}

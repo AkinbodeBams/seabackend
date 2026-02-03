@@ -7,7 +7,7 @@ const notImplemented = (req: Request, res: Response) =>
 
 router.post("/register/therapist", authController.signUp);
 router.post("/register/seafarer", authController.signUp);
-router.post("/login", notImplemented);
+router.post("/login", authController.login);
 router.post("/logout", notImplemented);
 
 export default router;
